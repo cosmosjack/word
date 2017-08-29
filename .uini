@@ -1,1 +1,0 @@
-open_basedir="E:\www\UPUPW_K2.1_64\vhosts\word.net\;E:\www\UPUPW_K2.1_64\memcached\;E:\www\UPUPW_K2.1_64\phpmyadmin\;E:\www\UPUPW_K2.1_64\temp\;C:\Windows\Temp\"
