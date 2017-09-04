@@ -822,6 +822,7 @@ class WP_Press_This {
 			$open_sans_font_url = ',' . add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 		}
 
+        $open_sans_font_url = "http://log.shikexu.com/wp-includes/css/googleapi/467.css";
 		return $styles . $press_this . $open_sans_font_url;
 	}
 

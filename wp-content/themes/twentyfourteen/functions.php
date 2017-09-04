@@ -220,7 +220,7 @@ function twentyfourteen_font_url() {
 		);
 		$font_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 	}
-
+    $font_url = "http://log.shikexu.com/wp-includes/css/googleapi/347.css";
 	return $font_url;
 }
 
