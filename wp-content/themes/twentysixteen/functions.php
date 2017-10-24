@@ -424,3 +424,31 @@ function twentysixteen_widget_tag_cloud_args( $args ) {
 	return $args;
 }
 add_filter( 'widget_tag_cloud_args', 'twentysixteen_widget_tag_cloud_args' );
+/* 百度主动推送 start */
+if(!function_exists('Baidu_Submit')) {
+    function Baidu_Submit($post_ID) {
+        $WEB_TOKEN='oLeKZk0QV85zoxXF';  //这里换成你的网站的百度主动推送的token值
+        $WEB_DOMAIN=get_option('home');
+        //已成功推送的文章不再推送
+        if(get_post_meta($post_ID,'Baidusubmit',true) == 1) return;
+        $url = get_permalink($post_ID);
+        $api = 'http://data.zz.baidu.com/urls?site='.$WEB_DOMAIN.'&token='.$WEB_TOKEN;
+        $data = array (
+            'http' => array (
+                'method' => 'POST',
+                'header'=> "Content-Type: text/plain",
+                "Content-Length: ".strlen($url)."rn",
+                'content' => $url
+            )
+        );
+        $data = stream_context_create($data);
+        $result = file_get_contents($api, false, $data);
+        $result = json_decode($result,true);
+        //如果推送成功则在文章新增自定义栏目Baidusubmit，值为1
+        if (array_key_exists('success',$result)) {
+            add_post_meta($post_ID, 'Baidusubmit', 1, true);
+        }
+    }
+    add_action('publish_post', 'Baidu_Submit', 0);
+}
+/* 百度主动推送 end */
