@@ -450,5 +450,6 @@ if(!function_exists('Baidu_Submit')) {
         }
     }
     add_action('publish_post', 'Baidu_Submit', 0);
+
 }
 /* 百度主动推送 end */
