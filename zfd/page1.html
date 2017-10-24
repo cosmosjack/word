@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>祝丰达寒暑报名</title>
+    <link rel="stylesheet" href="./css/page1.css">
+    <script src="./js/fontSize.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script>
+        $(function(){
+            if($("#checkbox").is(":checked")){
+                $("#input_btn").attr("index",2);
+                $("#input_btn").css({"background-color":"#de6a0a"});
+            }
+        });
+        function checkfun(e){
+            if($(e).is(":checked")){
+//                alert('11');
+                $("#input_btn").attr("index",2);
+                $("#input_btn").css({"background-color":"#de6a0a"});
+            }else{
+                $("#input_btn").attr("index",1);
+                $("#input_btn").css({"background-color":"#F9C498"});
+
+//                alert('22');
+            }
+        }
+        function form_sub(e){
+            if($(e).attr("index") == 2){
+                window.location.href = "page2.html";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>各高校寒暑假报名平台</h2>
+    <div class="center">
+        <p>广东祝丰达实业发展有限公司校企综合部门，是专门为全国各地寒暑假工，校园精英提供就业实习以及在校创业的一个平台。</p>
+        <p>报名平台有以下优点：</p>
+        <p>1：报名的并不一定就要去企业实习，报名之后有相应的专业人士打电话，详细讲解企业实情，去不去属于个人自由。</p>
+        <p>2：根据寒暑假工的个人需求，尽最大的努力为学生安排实习就业。</p>
+        <p>3：我们会提前发送企业信息，让同学们及时了解企业需求，防止同学们出来后与用人单位要求不符合。</p>
+        <p>4：承诺真是宣传，实事求是，不与别人比高工资高待遇。</p>
+        <p>5：早放假的，珍惜早入职信息，越早入职工资越高，所安排的岗位越轻松。</p>
+        <p>6：注意高工资的宣传，部分企业用高工资诱惑学生，实际上要么工作累，要么就是骗子。</p>
+        <p>7：所推荐的企业，全部都是我们公司长年合作的企业，有多年的合作才推荐给大家。</p>
+        <p>8：企业资源锁提供的主要是东莞凤岗、虎门、长安、清溪；深圳、惠州、江西、湖南等地。远的团队人数多的可以包车接送。</p>
+        <p>9：在此祝各位同学有一个充实愉快的假期。如有疑问可咨询18926982001</p>
+        <p class="inp">
+            <input id="checkbox" onchange="checkfun(this);"  type="checkbox">
+            <span>我已阅读以上报名须知，同意并遵守以上条款</span>
+        </p>
+        <p>
+            <input onclick="form_sub(this);" index="1" id="input_btn" type="button" value="确认提交">
+        </p>
+    </div>
+</body>
+</html>

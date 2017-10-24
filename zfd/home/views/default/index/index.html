@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>钓友天下</title>
+    <meta name="description" content="钓友天下">
+    <meta name="keywords" content="钓友天下">
+    <meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=no,maximum-scale=1.0"/>
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <link rel="apple-touch-icon" href="../../js/flea/images/favicon.ico">
+    <link rel="Shortcut Icon" href="../../js/flea/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../js/flea/css/Y-style.css">
+    <link rel="stylesheet" href="../../js/flea/css/Y-style2.css">
+    <script type="text/javascript" src="../../js/flea/js/jquery-1.8.3.min.js"></script>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                    recalc = function () {
+                        var clientWidth = docEl.clientWidth;
+                        if (!clientWidth) return;
+                        if(clientWidth>=640){
+                            docEl.style.fontSize = '120px';
+                        }else{
+                            docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                        }
+                    };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+
+        //图片上传预览功能
+        function setImagePreview(input_img,preview,localImag) {
+            var docObj=document.getElementById(input_img); //input 框
+
+            var imgObjPreview=document.getElementById(preview); //img 展示框
+            if(docObj.files && docObj.files[0])
+            {
+//火狐下，直接设img属性
+                imgObjPreview.style.display = 'block';
+                imgObjPreview.style.width = '1rem';
+                imgObjPreview.style.height = '1.3rem';
+//imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+//火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+                imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+            }
+            else
+            {
+//IE下，使用滤镜
+                docObj.select();
+                var imgSrc = document.selection.createRange().text;
+                var localImagId = document.getElementById(localImag); //展示图片的div
+//必须设置初始大小
+                localImagId.style.width = "1rem";
+                localImagId.style.height = "1.3rem";
+//图片异常的捕捉，防止用户修改后缀来伪造图片
+                try{
+                    localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+                }
+                catch(e)
+                {
+                    alert("您上传的图片格式不正确，请重新选择!");
+                    return false;
+                }
+                imgObjPreview.style.display = 'none';
+                document.selection.empty();
+            }
+            /* 改变后增加 图片个数 start */
+            var now_img_num = $(".flea_img").length;
+//alert(now_img_num);
+            if(now_img_num <= 3){
+// var addItem = $('#Address').clone(true).attr('id', 'NewAddress');
+                $(".flea_img").last().after("<div class='flea_img' style='float: left;width: 30%;margin-right: 3%;'><label><input type='file' multiple='multiple' style='display: none;' name='file"+now_img_num+"' id='input_img"+now_img_num+"' value='' onchange='javascript:setImagePreview(\"input_img"+now_img_num+"\",\"preview"+now_img_num+"\",\"localImag"+now_img_num+"\");'> <a style='text-align: center;'> <h3><div id='localImag"+now_img_num+"'><img id='preview"+now_img_num+"' src='../../js/flea/images/add_person.png' style='margin:0 auto .1rem;display: block; width: 1rem; height: 1.3rem;'></div></h3> <h4>添加图片</h4> <div style='clear:both;'></div> </a> </label> </div>");
+            }
+            /* 改变后增加 图片个数 end */
+            return true;
+        }
+        function ajax_form(){
+            var form = new FormData(document.getElementById("flea_form"));
+// var req = new XMLHttpRequest();
+// req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
+// req.send(form);
+            $.ajax({
+                url:"http://33hao.net/shop/app.php?act=member_flea_ajax&op=add_flea_mobil",
+                type:"post",
+                data:form,
+                processData:false,
+                contentType:false,
+                success:function(msg){
+// window.clearInterval(timer);
+// console.log("over..");
+// alert(JSON.stringify(msg));
+                    if(msg.state == 200){
+                        alert('发布成功');
+                    }
+                    location.href = history.back(-1);
+                },
+                error:function(e){
+                    alert("错误！！");
+                    window.clearInterval(timer);
+                }
+            });
+
+
+        }
+    </script>
+
+
+</head>
+
+<body>
+<header>
+    <div class="Y-header-enter-bg">
+        <div class="Y-forum-enter">
+            <a href="javascript:history.back(-1);">&lt;</a>
+            <h2>二手渔具交易出售发布</h2>
+        </div>
+    </div>
+</header>
+
+<form id="flea_form" action="http://33hao.net/shop/app.php?act=member_flea_ajax&op=add_flea_mobil" method="post" enctype="multipart/form-data">
+    <input name="form_submit" type="hidden" value="ok">
+    <div class="Y-Online">
+<span class="Y-OnlineSp1">
+
+<input type="text" placeholder="二手商品名字" name="goods_name" class="Y-OnlineIp1" style="width:100%;border-right:1px solid #D0D0D0"/>
+
+</span>
+        <span class="Y-OnlineSp2">商品图片</span>
+        <span class="Y-OnlineSp3"><!--(长按图片并拖动可排序)--></span>
+        <div style="clear:both;"></div>
+        <br/>
+        <br/>
+        <div class="flea_img" style="float: left;width: 30%;margin-right: 3%;">
+            <label>
+                <input type="file" multiple="multiple" style="display: none;" name="file0" id="input_img" value="" onchange="javascript:setImagePreview('input_img','preview','localImag');">
+                <a style="text-align: center;">
+                    <h3><div id="localImag"><img id="preview" src="../../js/flea/images/add_person.png" style="margin:0 auto .1rem;display: block; width: 1rem; height: 1.3rem;"></div></h3>
+                    <h4>添加图片</h4>
+                    <div style="clear:both;"></div>
+                </a>
+            </label>
+        </div>
+        <!--<div id="test" style="float: left;width: 30%;margin-right: 3%;">
+        <label>
+        <input type="file" multiple="multiple" style="display: none;" name="file0" id="input_img1" value="" onchange="javascript:setImagePreview('input_img1','preview1','localImag1');">
+        <a style="text-align: center;">
+        <h3><div id="localImag1"><img id="preview1" src="../../js/flea/images/add_person.png" style="margin:0 auto .1rem;display: block; width: 1rem; height: 1.3rem;"></div></h3>
+        <h4>添加图片</h4>
+        <div style="clear:both;"></div>
+        </a>
+        </label>
+        </div>-->
+        <div style="clear: both;"></div>
+
+        <br/>
+        <h2 class="Y-OnlineH2">添加描述</h2>
+
+        <textarea class="Y-ReleaseArea" name="flea_pname" placeholder="请输入商品描述"></textarea>
+
+        <br/>
+<span class="Y-ReleaseSp4">
+<input type="text" value="现价" disabled="true" class="Y-ReleaseIp4"/>
+<input type="text" value="" name="goods_price" class="Y-ReleaseIp5" maxlength="20" placeholder="请输入商品价格"/>
+</span>
+<span class="Y-ReleaseSp4">
+<input type="text" value="原价" disabled="true" class="Y-ReleaseIp6"/>
+<input type="text" value="" name="goods_store_price" class="Y-ReleaseIp7" maxlength="20" placeholder="请输入商品原价"/>
+</span>
+
+<span class="Y-ReleaseSp4">
+<a href="#">
+    <input type="text" value="新旧程度" name="flea_quality" disabled="true" class="Y-ReleaseIp6" style="width:25%"/>
+    <span class="Y-NewOld"></span>
+    <span class="Y-ReleaseIp26" style="border-top:none"><img src="../../js/flea/images/Y-ReleaseE.png"/></span>
+</a>
+</span>
+
+
+        <br/>
+
+<span class="Y-OnlineSp4">
+<a href="#">
+    <input type="text" value="分类至" disabled="true" class="Y-OnlineIp4"/>
+    <input type="text" value="鱼竿" name="gc_name" disabled="true" class="Y-OnlineIp5"/>
+    <input type="hidden" name="gc_id" value="2">
+    <span class="Y-ReleaseIp26" style="border-right:none"><img src="../../js/flea/images/Y-ReleaseE.png"/></span>
+</a>
+</span>
+
+<span class="Y-OnlineSp4">
+<input type="text" value="提示" disabled="true" class="Y-OnlineIp4"/>
+<input type="text" value="交易成功后短信提示" disabled="true" class="Y-OnlineIp5" style="text-indent:.4rem"/>
+<!-- <span class="Y-ReleaseIp26" style="border-right:none"><img src="../../js/flea/images/Y-ReleaseG.png"/></span>-->
+<div style="background:#fff;float: left;width: 13%;height: .7rem;border-bottom: 1px solid #ddd;border-top: 1px solid #ddd; ">
+    <div class="top-border" style="margin-top: .18rem;position: relative;width: .8rem;height: .29rem;background: #f6b03a;float: left;border-radius: 15px;-webkit-border-radius: 15px;-moz-border-radius: 15px;">
+        <span style="border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;width: 35%;height: 100%;background: #fff;left: 0;margin-top: 0;box-shadow: 0px 1px 2px #5C5B5B;-webkit-box-shadow: 0px 1px 2px #5C5B5B;-moz-box-shadow: 0px 1px 2px #5C5B5B;"></span>
+    </div>
+</div>
+<div style="clear:both;"></div>
+</span>
+
+        <div class="Y-IdnBody" style="float:left">
+<span class="Y-IdnBodySp">
+<input type="text" value="姓名" disabled="true" class="Y-IdnInput2"/>
+<input type="text" placeholder="仅订单交易成功买家可以查看" class="Y-IdnInput3" style="width:75%"/>
+</span>
+<span class="Y-IdnBodySp">
+<input type="text" value="联系电话" disabled="true" class="Y-IdnInput2" style="border-radius:0 0 0 10px"/>
+<input type="text" name="flea_pphone" placeholder="仅订单交易成功买家可以查看" class="Y-IdnInput3" style="width:75%;border-radius:0 0 10px 0"/>
+</span>
+        </div>
+        <div class="clear"></div>
+        <div class="Y-Che">
+            <input type="button" value="撤销发布"/>
+            <input type="button" value="修改详情"/>
+        </div>
+        <div class="clear"></div>
+        <div class="Y-IdnBot" style="margin-top:.3rem">
+            <input type="button" onclick="ajax_form();" name="sub" value="提交"/>
+            <div class="Y-IdnTog">
+                <input type="button" id="im1" class="Y-IdnTogImg2"/>
+                <h2>我已经阅读并同意</h2>
+                <h3>服务协定</h3>
+            </div>
+
+        </div>
+    </div>
+</form>
+<script>
+    jQuery (function ($)
+    {
+        $ ("#im1").click (function ()
+        {
+            $ (this).toggleClass ("Y-IdnTogImg1");
+            $ ("#toggle_box").slideToggle (300);
+        });
+    });
+</script>
+<script type="text/javascript" src="../../js/flea/js/ship.js"></script>
+<script type="text/javascript" src="../../js/flea/js/jquery-color.js"></script>
+</body>
+</html>

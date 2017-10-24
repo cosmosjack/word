@@ -1,0 +1,1 @@
+<?php {"pri":"id","0":"name","1":"phone","2":"wx","3":"time","4":"age","5":"school","6":"company","7":"agree","8":"ctime"}yes

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>祝丰达寒暑报名</title>
+    <link rel="stylesheet" href="./css/page2.css">
+    <script src="./js/fontSize.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script>
+        function ajax_form(){
+            var form = new FormData(document.getElementById("form_post"));
+            var ApiUrl = "http://"+window.location.host+"/zfd/";
+// var req = new XMLHttpRequest();
+// req.open("post", "${pageContext.request.contextPath}/public/testupload", false);
+// req.send(form);
+            $.ajax({
+                url:ApiUrl+"index.php",
+                type:"post",
+                data:form,
+                processData:false,
+                contentType:false,
+                success:function(msg){
+                    console.log(msg);
+					alert(msg.msg);
+					<!-- history.go(-1); -->
+                },
+                error:function(e){
+                    alert("错误！！");
+                }
+            });
+
+
+        }
+    </script>
+</head>
+<body>
+    <h2>名校寒暑假报名平台</h2>
+    <form id="form_post" action="http://www.video.com/zfd/index.php" method="post">
+        <div class="center">
+            <div class="lis-one">
+                <input name="name" type="text" value="" placeholder="姓名">
+                <input name="phone" type="text" value="" placeholder="手机号">
+                <input name="wx" type="text" value="" placeholder="微信号">
+                <input name="time" type="text" value="" placeholder="放假时间 2017-08-10">
+                <input name="age" type="text" value="" placeholder="年龄">
+                <input name="school" type="text" value="" placeholder="学校">
+            </div>
+            <div class="lis-two">
+                <p>工厂条件&nbsp;&nbsp;(多选)</p>
+                <ul>
+                    <li><input name="company[]" type="checkbox" value="1">&nbsp;&nbsp;工厂长白班(不用通宵熬夜)</li>
+                    <li><input name="company[]" type="checkbox" value="2">&nbsp;&nbsp;工厂两班倒(一月白班，一月夜班)</li>
+                    <li><input name="company[]" type="checkbox" value="3">&nbsp;&nbsp;不限地区(大部分安排东莞)</li>
+                    <li><input name="company[]" type="checkbox" value="4">&nbsp;&nbsp;不要求高薪(保证工资不低于市场价)</li>
+                    <li><input name="company[]" type="checkbox" value="5">&nbsp;&nbsp;有实习的地方就可以</li>
+                </ul>
+            </div>
+            <div class="lis-three">
+                <p>有没有愿意做暑假工代理</p>
+                <ul>
+                    <li><input name="agree" type="radio" value="1">&nbsp;&nbsp;有</li>
+                    <li><input name="agree" type="radio" value="2">&nbsp;&nbsp;没</li>
+                    <li><input name="agree" type="radio" value="3">&nbsp;&nbsp;想了解后,再做决定</li>
+                </ul>
+            </div>
+            <div class="lis-four">
+                <input type="button" onclick="ajax_form()" value="确认提交">
+            </div>
+        </div>
+    </form>
+</body>
+</html>
