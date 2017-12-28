@@ -19,6 +19,48 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
+
+    <?php //主页描述和关键词，内容为自定义
+    if (is_home()){
+        $description = "这里是主页描述";	$keywords = "这里是主页关键词";
+    }
+    //文章页面文章名称为描述，文章标签为关键词
+    elseif(is_single()){
+        if($post->post_excerpt)
+        {
+            $description = $post->post_excerpt;
+        }	elseif(function_exists('wp_thumbnails_excerpt'))
+        {
+            $description = wp_thumbnails_excerpt($post->post_content, true);
+        }	else {
+            $description = $post->post_title;
+        }
+        $keywords = "";
+        $tags = wp_get_post_tags($post->ID);
+        foreach ($tags as $tag )
+        {
+            $keywords = $keywords . $tag->name  . ",";
+        }
+        $keywords = rtrim($keywords, ', ');
+    }
+    //分类页面关键词和描述，is_category()括号中写分类页面的别名//使用分类名称作为关键词，分类描述做为描述
+    elseif(is_category()){
+        $keywords = single_cat_title('', false);
+        $description = category_description();
+    }
+    //标签页使用标签名作为关键字，标签描述作为描述
+    elseif (is_tag()){
+        $keywords = single_tag_title('', false);
+        $description = tag_description();
+    }
+    //page页面描述,page_name为你所创建的page页面的别名，可以更换。
+    ////关键词和描述均为自定义
+    elseif (is_page('page_name')){
+        $keywords = "这里是关键词";	$description = "这里是描述";
+    }
+    //打印出描述和关键词的内容
+    echo "<meta name=\"description\" content=\"$description\" /><meta name=\"keywords\" content=\"$keywords\" />";
+    ?>
 </head>
 
 <body <?php body_class(); ?>>
