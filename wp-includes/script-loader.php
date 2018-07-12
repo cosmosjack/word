@@ -718,7 +718,7 @@ function wp_default_styles( &$styles ) {
 
 		// Hotlink Open Sans, for now
 		$open_sans_font_url = "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=$subsets";
-		$open_sans_font_url = "http://log.shikexu.com/wp-includes/css/googleapi/346.css";
+		$open_sans_font_url = "https://www.shikexu.com/wp-includes/css/googleapi/346.css";
 	}
 
 	// Register a stylesheet for the selected admin color scheme.

@@ -73,8 +73,11 @@ if($post['token'] == 'CosmosJack'){
 
 }else{
 
-    $data_barrage = $db_barrage->field("player as _id,v as __v,*")->where(array('player'=>$_GET['id']))->select();
-    $data_barrage = $db_barrage->select();
+    $data_barrage = $db_barrage->field("player as _id,v as __v,author,time,text,color,type,ip,referer,player")->where()->select();
+//    for($i=0;$i<count($data_barrage);$i++){
+//        $data_barrage[$i]['player'] = array($data_barrage[$i]['player']);
+//    }
+//    $data_barrage = $db_barrage->select();
     /*$msg['_id']="59c1cc5b555a0215ba1b16ac";
     $msg['author'] = 'CosmosJack';
     $msg['time'] = 3.2;

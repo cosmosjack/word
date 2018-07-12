@@ -38,7 +38,7 @@ class DPlayer {
     
     // registers default options
     public static function dplayer_install() {
-        add_option( 'kblog_danmaku_url', '//log.shikexu.com' );
+        add_option( 'kblog_danmaku_url', '//www.shikexu.com' );
         add_option( 'kblog_danmaku_token', 'tokendemo' );
         add_option( 'kblog_danmaku_dplayer_version', '1.6.1' );
         add_option( 'kblog_danmaku_dplayer_version_check', '0' );

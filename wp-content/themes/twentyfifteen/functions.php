@@ -214,7 +214,7 @@ function twentyfifteen_fonts_url() {
 			'subset' => urlencode( $subsets ),
 		), 'https://fonts.googleapis.com/css' );
 	}
-    $fonts_url = "http://log.shikexu.com/wp-includes/css/googleapi/47.css";
+    $fonts_url = "https://www.shikexu.com/wp-includes/css/googleapi/47.css";
 	return $fonts_url;
 }
 endif;
